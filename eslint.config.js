@@ -21,7 +21,11 @@ module.exports = [
       eqeqeq: ["error", "always"],
       "no-console": "off",
       "object-curly-spacing": ["error", "always"],
-      "arrow-spacing": ["error", { before:true, after:true }]
+      "arrow-spacing": ["error", { before:true, after:true }],
+      'no-unused-vars': ['error', {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_'
+      }]
     }
   }
 ]

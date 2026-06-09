@@ -1,20 +1,19 @@
 const blogRouter = require ("express").Router()
 const Blog = require ("../models/blog")
 
-blogRouter.get("/", (req, res) => {
-  Blog.find({}).then(result => {
-    res.json(result)
-  })
+blogRouter.get("/", async (req, res) => {
+  const allBlogsInDb = await Blog.find({})
+  res.json(allBlogsInDb)
+  
 })
 
-blogRouter.get("/:id", (req, res, next) => {
-  Blog.findById(req.params.id).then(resultBlog => {
-    if(!resultBlog){ return res.status(404).end()}
-    res.json(resultBlog)
-  }).catch(next)
+blogRouter.get("/:id", async (req, res) => {
+  const theBlog = await Blog.findById(req.params.id)
+  if(!theBlog){ return  res.status(404).end()}
+  res.json(theBlog)
 })
 
-blogRouter.post("/", (req, res, next) => {
+blogRouter.post("/", async (req, res) => {
   const body = req.body
   const blog = new Blog({
     title: body.title,
@@ -22,27 +21,22 @@ blogRouter.post("/", (req, res, next) => {
     url: body.url,
     likes: body.likes || 0
   })
-  blog.save().then( savedBlog => { return res.json(savedBlog)})
-    .catch(next)
-  
+  const savedBlog = await blog.save()
+  res.status(201).json(savedBlog)
 })
 
-blogRouter.put("/:id", (req, res, next) => {
+blogRouter.put("/:id", async (req, res) => {
   const { title, author, url, likes } = req.body
-  Blog.findById(req.params.id).then( blog => {
-    if(!blog){ return res.status(404).end()}
-    blog.title = title
-    blog.author = author
-    blog.url = url
-    blog.likes = likes || 0
-    blog.save().then(updatedBlog => { res.json(updatedBlog) })
-      .catch(next)
-  }).catch(next)
+  const blogToUpdate = await Blog.findByIdAndUpdate(req.params.id,
+    { title, author, url, likes },
+    { returnDocument: "after", runValidators: true }
+  )
+  res.status(200).json(blogToUpdate)
 })
 
-blogRouter.delete("/:id", (req, res, next) => {
-  Blog.findByIdAndDelete(req.params.id).then( () => {
-    res.status(204).end()
-  }).catch(next)
+blogRouter.delete("/:id", async (req, res) => {
+  await Blog.findByIdAndDelete(req.params.id)
+  res.status(204).end()
+  
 })
 module.exports= blogRouter

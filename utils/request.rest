@@ -1,20 +1,20 @@
 GET http://localhost:3001/api/blogs/
 ###
-GET http://localhost:3001/api/blogs/6a1d93dcf4e4ff383c4cfe49
+GET http://localhost:3001/api/blogs/6a22b9f213225f52466aa5e0
 ###
 POST http://localhost:3001/api/blogs/
 Content-Type: application/json
 
 {
-  "title": "yeralti",
-  "author": "ali&sultan",
-  "url": "www.mohammmed.com",
-  "likes": 2,
-  "id": "6a1c755963c6d82a29cf9e9b"
+    "title": "got",
+    "author": "kuzey&cemre",
+    "url": "www.mohammmed.com",
+    "likes": 2,
+    "id": "6a1d8a4658f4ea98e6ab5b16"
 }
 
 ###
-PUT http://localhost:3001/api/blogs/6a1d9401f4e4ff383c4cfe4a
+PUT http://localhost:3001/api/blogs/6a287ebacd3e3d3b90857ca5
 Content-Type: application/json
 
 {
@@ -26,4 +26,4 @@ Content-Type: application/json
   }
 
 ###
-DELETE http://localhost:3001/api/blogs/6a1d8a4658f4ea98e6ab5b16
+DELETE http://localhost:3001/api/blogs/6a287ebacd3e3d3b90857ca5
